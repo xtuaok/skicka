@@ -1271,3 +1271,12 @@ func (gd *GDrive) GetDriveUsage() (Usage, error) {
 		Used:     about.QuotaBytesUsedAggregate,
 		Users:    users}, nil
 }
+
+
+// UpdateDescription set descripton text to the give file
+func (gd *GDrive) UpdateDescription(file *File, text string) error {
+	driveFile := file.driveFile()
+	driveFile.Description = text
+	_, err := gd.svc.Files.Update(file.Id, driveFile).Do()
+	return err
+}

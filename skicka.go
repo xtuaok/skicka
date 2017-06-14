@@ -923,6 +923,7 @@ Supported commands are:
   mkdir     Create a new folder or folder hierarchy on Drive
   rm        Remove a file or folder on Google Drive
   upload    Upload a local file or directory hierarchy to Drive
+  desc      Set description text to the given file
 
 'skicka help' prints more detailed documentation.
 `)
@@ -1003,7 +1004,7 @@ func main() {
 	// usage message.
 	if cmd != "cat" && cmd != "download" && cmd != "df" && cmd != "du" &&
 		cmd != "fsck" && cmd != "ls" && cmd != "mkdir" && cmd != "rm" &&
-		cmd != "upload" {
+		cmd != "upload" && cmd != "desc" {
 		shortUsage()
 		os.Exit(1)
 	}
@@ -1073,6 +1074,8 @@ func main() {
 	case "upload":
 		errs = upload(args)
 		gd.UpdateMetadataCache(*metadataCacheFilename)
+	case "desc":
+		errs = description(args)
 	default:
 		errs = 1
 	}
